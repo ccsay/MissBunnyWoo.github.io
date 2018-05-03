@@ -1,0 +1,127 @@
+<h1 id="golang-实现多种排序算法">Golang 实现多种排序算法</h1>
+
+<h3 id="冒泡排序">冒泡排序</h3>
+<p>冒泡排序思想：从前到后，依次两两比较，两层循环，一层控制比较趟数，一层控制前后<code class="highlighter-rouge">两两比较</code></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>func sortByBubble(s []int64) {
+	for i := 0; i &lt; len(s); i++ { //i控制比较趟数
+		for j := 0; j &lt; len(s)-i-1; j++ { //j控制从前到后，两两比较
+			if s[j] &gt; s[j+1] { //两两比较
+				s[j], s[j+1] = s[j+1], s[j]
+			}
+		}
+	}
+	fmt.Println(s)
+
+}
+
+
+</code></pre>
+</div>
+<h3 id="选择排序">选择排序</h3>
+<p>选择排序思想：假定位前面是即将要存有序的位置，后面是无序的位置。从没有排序的序列中，选择一个最小的，依次插入到前面的有序位置的后边。
+` 从乱序中找到目标 `</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>//选择排序：假定位前面是即将要存有序的位置，后面是无序的位置。从没有排序的序列中，选择一个最小的，依次插入到前面的有序位置的后边
+func sortBySelect(s []int64) {
+	for i := 0; i &lt; len(s); i++ { //控制比较的趟数,守住不动的定点
+		for j := i + 1; j &lt; len(s); j++ { //从后面挑选最小的
+			if s[i] &gt; s[j] { //拿定点，跟后面的比较，最小的就交换位置
+				s[i], s[j] = s[j], s[i]
+			}
+		}
+	}
+	fmt.Println(s)
+}
+
+</code></pre>
+</div>
+
+<h3 id="插入排序">插入排序</h3>
+<p>插入排序思想：从后面乱序中，依次取出一个然后插入到前面排序的位置</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>//插入排序：从后面乱序中，依次取出一个然后插入到前面排序的位置，
+func sortByInsert(s []int64) {
+	for i := 1; i &lt; len(s); i++ { //i控制后面乱序和前面顺序的分界点，i控制分界点的移动
+		if s[i-1] &gt; s[i] { //判断相邻的位置是否大小顺序正确，否则就要找到正确的位置
+			for j := i - 1; j &gt;= 0 &amp;&amp; s[j] &gt; s[j+1]; j-- { //j控制位置的移动
+				s[j+1], s[j] = s[j], s[j+1] //以交换的方式做了简单的数据移动
+			}
+		}
+	}
+	fmt.Println(s)
+}
+
+</code></pre>
+</div>
+
+<h3 id="快速排序">快速排序</h3>
+<blockquote>
+
+  <p>排序算法主要思路：</p>
+  <ol>
+    <li>假定起始位置位哨兵</li>
+    <li>写一个方法，作用用来确定中介的位置，并且进行同时的排序功能，返回中介的位置</li>
+    <li>递归方式分别调用比中介点小的部分，和比中介点大的部分，一分为二的思想</li>
+    <li>在求中介值时，始终明确low&lt;high，使用一个temp变量存储哨兵的值</li>
+    <li>从后往前，逐个遍历比较，遇到小于哨兵的就暂停，且进行交换</li>
+    <li>从前往后，逐个遍历比较，遇到大于哨兵的就暂停，且进行交换</li>
+    <li>直到low和high相遇，停止循环，返回low的位置，即下次的一分为二时使用的分界点</li>
+  </ol>
+</blockquote>
+
+<p>代码如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>//快速排序：
+func quickSort(s []int64, low, high int64) { //start起始点，end终止点
+	if low &lt; high {
+		flag := partition(s, low, high) //把切片一分为二，分别对两部分进行递归排序
+		quickSort(s, low, flag-1)       //低的部分进行排序
+		quickSort(s, flag+1, high)      //高的部分进行排序
+	}
+
+}
+
+
+
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>func partition(s []int64, low, high int64) int64 {
+	//分别控制两个点，一个从前往后遍历，一个从后往前遍历
+	//假设我们每次将序列中的第一个元素作为定位排序的目标
+	tempValue := s[low] //哨兵
+	for low &lt; high { //当两边相遇时，结束本趟比较，直到low和high相遇时本趟排序结束
+		for s[high] &gt; tempValue &amp;&amp; low &lt; high { //从后往前遍历，找比哨兵小的数
+			high--
+		}
+		tempValue, s[high] = s[high], tempValue //遇到比哨兵小的数则暂停，进行交换
+
+		for s[low] &lt; tempValue &amp;&amp; low &lt; high { //然后，从前往后遍历，找比哨兵大的数
+			low++
+		}
+		s[low], tempValue = tempValue, s[low] //遇到比哨兵大的，就暂停，进行交换
+		fmt.Println(s)
+	}
+
+	return low //返回本次排序的能够确定最终位置的元素位置
+}
+
+</code></pre>
+</div>
+
+<p>测试使用的main函数：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>func main() {
+	s := []int64{6, 1, 11, 2, 7, 9, 3, 4, 5, 10, 8}
+	fmt.Println(s)
+	sortByBubble(s)
+	sortBySelect(s)
+	sortByInsert(s)
+	quickSort(s, 0, int64(len(s)-1))
+	fmt.Println(s)
+}
+
+</code></pre>
+</div>
+
