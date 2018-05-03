@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>Golang学习笔记之3：结构体、面向对象思想</title>
+  <meta name="description" content="go语言中结构体语法笔记整理，及面向对象的思路梳理">
+  <meta name="author" content="兔姐">
+
+  <meta name="keywords" content="Golang学习笔记之3：结构体、面向对象思想"
+  />
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Golang学习笔记之3：结构体、面向对象思想">
+  <meta name="twitter:description" content="go语言中结构体语法笔记整理，及面向对象的思路梳理">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Golang学习笔记之3：结构体、面向对象思想">
+  <meta property="og:description" content="go语言中结构体语法笔记整理，及面向对象的思路梳理">
+  <meta property="og:site_name" content="Golang学习笔记之3：结构体、面向对象思想e"
+  />
+
+
+  <link rel="icon" type="image/png" href="/images/favicon.png" />
+  <link href="/images/favicon.png" rel="shortcut icon" type="image/png">
+
+
+  <link rel="stylesheet" href=" /css/main.css ">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="canonical" href="http://localhost:4000/2018/05/03/golang-struct/">
+  <link rel="alternate" type="application/rss+xml" title="程序媛技术博客" href="http://localhost:4000 /feed.xml
+    ">
+
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+
+  <!-- 站点统计 -->
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>
+  <!-- 百度统计 -->
+  
+  <script>
+    var _hmt = _hmt || [];
+    (function () {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?f3290601666dc2ca016a38c340c144f1";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+  
+
+  <!-- google 统计 -->
+  
+  <script>
+    (function (i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r;
+      i[r] = i[r] || function () {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date();
+      a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+      a.async = 1;
+      a.src = g;
+      m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+    ga('create', 'UA-104237177-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+  
+
+  <script>
+    (function () {
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      } else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+</head>
+
+
+<body>
+
+  <span class="mobile btn-mobile-menu">        
+      <div class="nav_container">
+         <nav class="nav-menu-item" style = "float:right">
+            <i class="nav-menu-item">
+              <a href="/#blog" title="" class="blog-button">  博客主页
+              </a>
+            </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/archive" title="archive" class="btn-mobile-menu__icon">
+                      所有文章
+                  </a>
+                </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/tags" title="tags" class="btn-mobile-menu__icon">
+                      分类
+                  </a>
+                </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/about" title="about" class="btn-mobile-menu__icon">
+                      关于我
+                  </a>
+                </i>
+            
+          </nav>
+          
+      </div>
+    </span> <header class="panel-cover panel-cover--collapsed" style="background-image: url('/images/background-cover.jpg')">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+        <!-- 头像效果-start -->
+        <div class="ih-item circle effect right_to_left">
+          <a href="/#blog" title="前往 程序媛技术博客 的主页" class="blog-button">
+            <div class="img"><img src="/images/avatar.jpg" alt="img"></div>
+            <div class="info">
+              <div class="info-back">
+                <h2 style="font-size: 14px">
+                   兔姐🐰 
+                </h2>´
+                <p style="font-size: 6px">
+                   程序媛|兔姐 
+                </p>
+              </div>
+            </div>
+          </a>
+        </div>
+        <!-- 头像效果-end -->
+        <h1 class="panel-cover__title panel-title"><a href="/#blog" title="link to homepage for 程序媛技术博客" class="blog-button">程序媛技术博客</a></h1>
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">兔姐🐰，一个有信仰的程序媛，专注学习技术，热衷于知识分享，为开源贡献出一点点力量！</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" /> 
+
+
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">博客主页</a></li>
+                
+                <li class="navigation__item"><a href="/archive" title="archive">所有文章</a></li>
+                
+                <li class="navigation__item"><a href="/tags" title="tags">分类</a></li>
+                
+                <li class="navigation__item"><a href="/about" title="about">关于我</a></li>
+                
+              </ul>
+            </nav>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:center;-webkit-justify-content:center">
+          <div style="display:flex;flex-direction:column;align-items:center;-webkit-flex-direction:column;-webkit-align-items:center;margin-right:10px">
+            <img src="/images/weixin.png" style="width:120px;height:120px;margin-top:30px;margin-bottom:10px" />
+            <span class="panel-cover__subtitle panel-subtitle" style="font-size: 12px">微信</span>
+          </div>
+          <!-- <div style="display:flex;flex-direction:column;align-items:center;-webkit-flex-direction:column;-webkit-align-items:center;margin-left:10px">
+            <img src="/images/lianhu.jpg" style="width:120px;height:120px;margin-top:30px;margin-bottom:10px" />
+            <span class="panel-cover__subtitle panel-subtitle" style="font-size: 12px">QQ</span>
+          </div> -->
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="panel-cover--overlay cover-clear"></div>
+  
+
+  </div>
+</header>
+
+
+  <div class="content-wrapper">
+    <div class="content-wrapper__inner">
+      <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <h1 class="post-title">Golang学习笔记之3：结构体、面向对象思想</h1>
+    <div class="post-meta">
+      <img src="/images/calendar.png" width="20px"/>
+      <time datetime="2018-05-03 00:00:00 +0800" itemprop="datePublished" class="post-meta__date date">2018-05-03</time>
+
+      <span id="busuanzi_container_page_pv"> | 阅读：<span id="busuanzi_value_page_pv"></span>次</span>
+    </p>
+    </div>
+  </header>
+
+  <section class="post">
+    <blockquote>
+
+  <p>整理：程序媛🐰</p>
+
+  <p>博客：http://cxytujie.github.io</p>
+
+  <p>备注：如有错误，请指正，不断更新迭代</p>
+
+</blockquote>
+
+<h3 id="面向对象">面向对象：</h3>
+<blockquote>
+  <p>面向对象：不是一门语言，也不是一门技术，是一种编程思路，把每一步封装成函数，然后调用。</p>
+</blockquote>
+
+<blockquote>
+  <p>面向过程：只关心过程、步骤，只关注实现的过程，像一个计划表</p>
+</blockquote>
+
+<h3 id="思考方式">思考方式：</h3>
+
+<ol>
+  <li>考虑问题中有哪些对象（类）？</li>
+  <li>这些对象是啥？属性————&gt;字段，行为————&gt;方法(函数)</li>
+  <li>对象和对象的关系（类和类的关系）？是否包含？是否聚合？</li>
+</ol>
+
+<h3 id="类">类</h3>
+<p>类：同一类事物的抽象描述，类中包含两种：</p>
+<ol>
+  <li>静态属性：就是描述性字段</li>
+  <li>动态属性：方法，即函数</li>
+</ol>
+
+<h3 id="对象">对象</h3>
+<p>对象：类中的一个具体的实例，使用类创建出来的就是对象</p>
+
+<h3 id="类和对象关系">类和对象关系</h3>
+
+<ol>
+  <li>类是对象的抽象描述，对象是类的一个具体实例</li>
+  <li>将一类对象的共同特征，进行抽取————&gt;定义类
+    抽象出： class —-&gt;struct{
+             属性：字段，变量
+             行为：方法，函数
+                 }</li>
+  <li>将类进行实例化————&gt;创建对象
+         通过struct创建对象，p1:=Person{}
+         对象名.属性
+         对象名.方法名（）
+         直接调用的是函数
+         通过对象调用的是方法</li>
+</ol>
+
+<h3 id="面向对象三大特征">面向对象三大特征</h3>
+<div class="highlighter-rouge"><pre class="highlight"><code>1. 封装性
+		"打包"，函数，方法，结构体，对外留个口，不关系你里面是细节，只需要调用即可，不关心内部的逻辑细节
+2. 继承性
+		描述一个类和另一个类的关系
+		
+	    子类继承父类：
+		子类可以直接访问父类的属性和方法
+		子类可以新增自己的属性和方法
+		子类可以重写父类的方法
+		
+		靠结构体的嵌套：
+		匿名结构体字段：提升字段（子类里爹的字段，就是提升字段）
+		
+3. 多态性：接口,一类事物的多种形态
+</code></pre>
+</div>
+<h2 id="结构体">结构体</h2>
+<h3 id="定义语法">定义语法</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>type 结构体名  struct{
+				字段名   字段类型
+			}
+</code></pre>
+</div>
+<h3 id="创建对象">创建对象</h3>
+<ol>
+  <li>对象名：=结构体名{val1，val2，val3}</li>
+  <li>对象名:=结构体名{字段名：val1,字段名：val2}</li>
+  <li>对象名：=结构体名{}
+ 对象名.字段名，进行赋值和取值</li>
+  <li>对象名：=new（Type）	//创建一个指针</li>
+</ol>
+
+<h3 id="结构体参数类型">结构体参数类型</h3>
+<p>func fun1(P Person){ } //拷贝数值，默认传递是值类型传递
+func fun2(p *Person){ } //指针地址传递</p>
+
+<h3 id="深浅拷贝">深浅拷贝</h3>
+<ol>
+  <li>深拷贝：就是将值复制一份，改变此处的值不影响原来的值</li>
+  <li>浅拷贝：将地址赋值个另一个变量，当一处对此地址进行改变时，远来的变量的值也变换了</li>
+</ol>
+
+<h3 id="匿名结构体和匿名字段">匿名结构体和匿名字段</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>没有名字的结构体
+			a:=struct{字段的定义}{赋值}
+			func (){}()
+			匿名字段
+			type A struct{
+				string
+				int
+			}
+			b:=A{"字符串",23}
+			b.string,b.int
+匿名字段可以理解为字段名和字段类型一致
+	
+</code></pre>
+</div>
+<h3 id="类和类的关系结构体嵌套">类和类的关系：（结构体嵌套）</h3>
+<div class="highlighter-rouge"><pre class="highlight"><code>		1、聚合关系（has a ）：讲一个类作为另一个类的属性字段
+
+		2、继承性(is a )：(嵌套)描述两个类的关系，一个类作为另一个类的子类，子类可以使用父类的功能
+		继承的意义：
+		1. 避免重复代码（子类）
+		2. 扩展类的功能（父类）
+		子类 is a 父类（能说的通就可以使用继承）
+		go语言没有真正的继承，靠两个结构体的嵌套模拟
+</code></pre>
+</div>
+
+<h3 id="程序设计">程序设计</h3>
+
+<p>通过面向对象的思维方式设计程序三步走：
+			1. 创建struct结构体
+			2. 设计结构体的功能方法
+			3. 创建结构体对象</p>
+
+<h3 id="代码示例聚合继承">代码示例（聚合、继承）</h3>
+<div class="highlighter-rouge"><pre class="highlight"><code>package main
+
+import (
+	"fmt"
+)
+
+type A struct {
+	name string
+	age  int
+}
+
+type B struct {
+	a A    //模拟聚合
+}
+
+type C struct {
+	A  //模拟继承		有提升字段
+}
+
+func main() {
+	//b:=B{}
+	b := B{A{"Jack", 20}}          //多层嵌套结构体初始化
+	fmt.Println(b.a.name, b.a.age) //输出Jack 20
+	c := C{A{"Bob", 18}}
+	//匿名提升字段可以通过结构体的名字进行访问
+	fmt.Println(c.A.name, c.A.age) //输出Bob 18
+	//匿名提升字段也可以直接访问其字段
+	fmt.Println(c.name, c.age)
+}
+
+</code></pre>
+</div>
+
+
+  </section>
+  <h3 style="color:blue"><strong>版权声明：博客文章版权归博主所有，未经授权，禁止转载，转载请注明出处</strong></h3>
+</article>
+
+<section>
+
+            <div class="content-play">
+              <p><a href="javascript:void(0)" onclick="dashangToggle()" class="dashang" title="打赏兔姐一杯咖啡嘛？">打赏兔姐一杯咖啡☕️</a></p>
+              <div class="hide_box-play"></div>
+              <div class="shang_box-play">
+                <a class="shang_close-play" href="javascript:void(0)" onclick="dashangToggle()" title="关闭"><img src="/images/payimg/close.jpg" alt="取消" /></a>
+                <div class="shang_tit-play">
+                  <p>感谢您的支持，我会继续努力的!</p>
+                </div>
+                <div class="shang_payimg">
+                    <img src="/images/payimg/zhifubaopay.png" alt="扫码支持" title="扫一扫" />
+                </div>
+              <div class="shang_payimg">
+                    <img src="/images/payimg/weixinpay.png" alt="扫码支持" title="扫一扫" />
+                </div>
+                <div class="pay_explain">扫码打赏，你说多少就多少</div>
+                <div class="shang_payselect">
+                  <div class="pay_item checked" data-id="alipay">
+                    <span class="pay_logo"><img src="/images/payimg/alipay.jpg" alt="支付宝" /></span>
+                  </div>
+                  <div class="pay_item" data-id="weipay">
+                    <span class="pay_logo"><img src="/images/payimg/wechat.jpg" alt="微信" /></span>
+                  </div>
+                </div>
+                <div class="shang_info-play">
+                  <p>打开<span id="shang_pay_txt">支付宝</span>扫一扫，即可进行扫码打赏哦</p>
+                </div>
+              </div>
+            </div>
+            <script type="text/javascript">
+            function dashangToggle(){
+              $(".hide_box-play").fadeToggle();
+              $(".shang_box-play").fadeToggle();
+            }
+            </script>
+
+            <div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';"></div>
+
+            <style type="text/css">
+              .content-play{width:80%;margin-top: 20px;margin-bottom: 10px;height:40px;}
+              .hide_box-play{z-index:999;filter:alpha(opacity=50);background:#666;opacity: 0.5;-moz-opacity: 0.5;left:0;top:0;height:99%;width:100%;position:fixed;display:none;}
+              .shang_box-play{width:540px;height:540px;padding:10px;background-color:#fff;border-radius:10px;position:fixed;z-index:1000;left:50%;top:50%;margin-left:-280px;margin-top:-280px;border:1px dotted #dedede;display:none;}
+              .shang_box-play img{border:none;border-width:0;}
+              .dashang{display:block;width:150px;margin:5px auto;height:28px;line-height:25px;padding:10px;background-color:pink;color:darkorchid;text-align:center;text-decoration:none;border-radius:10px;font-weight:bold;font-size:16px;transition: all 0.3s;}
+              .dashang:hover{opacity:0.8;padding:15px;font-size:18px;}
+              .shang_close-play{float:right;display:inline-block;
+                margin-right: 10px;margin-top: 20px;
+              }
+              .shang_logo{display:block;text-align:center;margin:20px auto;}
+              .shang_tit-play{width: 100%;height: 75px;text-align: center;line-height: 66px;color: #a3a3a3;font-size: 16px;background: url('/images/payimg/cy-reward-title-bg.jpg');font-family: 'Microsoft YaHei';margin-top: 7px;margin-right:2px;}
+              .shang_tit-play p{color:#a3a3a3;text-align:center;font-size:16px;}
+              .shang_payimg{width:140px;padding:10px;padding-left: 80px; /*border:6px solid #EA5F00;**/margin:0 auto;border-radius:3px;height:140px;display:inline-block;}
+              .shang_payimg img{display:inline-block;margin-right:10px;float:left;text-align:center;width:140px;height:140px; }
+              .pay_explain{text-align:center;margin:10px auto;font-size:12px;color:#545454;}
+              .shang_payselect{text-align:center;margin:0 auto;margin-top:40px;cursor:pointer;height:60px;width:500px;margin-left:110px;}
+              .shang_payselect .pay_item{display:inline-block;margin-right:140px;float:left;}
+              .shang_info-play{clear:both;}
+              .shang_info-play p,.shang_info-play a{color:#C3C3C3;text-align:center;font-size:12px;text-decoration:none;line-height:2em;}
+            </style>
+
+       <ul class="pager">
+        
+        <li class="previous">
+            <a href="/2018/05/03/golang-sort/" data-toggle="tooltip" data-placement="top" title="Golang学习笔记之2：多种排序算法">上一篇：  <span>Golang学习笔记之2：多种排序算法</span>
+            </a>
+        </li>
+        
+        
+    </ul>
+</section>
+
+<section class="post-comments">
+  <!--PC和WAP自适应版-->
+<div id="SOHUCS" sid=Golang学习笔记之3：结构体、面向对象思想 ></div>
+<script type="text/javascript">
+(function(){
+var appid = 'cytfSz8yx';
+var conf = 'prod_ad710bf09d342725ed536beddc68aa27';
+var width = window.innerWidth || document.documentElement.clientWidth;
+// if (width < 960) {
+// window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("http://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })();
+ </script>
+
+
+
+
+</section>
+
+ <section class="footer">
+  <footer>
+    <div class="footer_div">
+      <nav class="cover-navigation navigation--social">
+        <ul class="navigation">
+
+           
+          <!-- Github -->
+          <li class="navigation__item_social">
+            <a href="https://github.com/MoliWu1993" title="@MoliWu1993 的 Github" target="_blank">
+              <i class='social fa fa-github fa-2x'></i>
+              <span class="label">Github</span>
+            </a>
+          </li>
+            
+
+          <!-- RSS -->
+          <li class="navigation__item_social">
+            <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+              <i class='social fa fa-rss fa-2x'></i>
+              <span class="label">RSS</span>
+            </a>
+          </li>
+
+          
+          <!-- Email -->
+          <li class="navigation__item_social">
+            <a href="mailto:1142155503@qq.com" title="Contact me">
+              <i class='social fa fa-envelope fa-2x'></i>
+              <span class="label">Email</span>
+            </a>
+          </li>
+          
+
+        </ul>
+      </nav>
+
+    </div>
+
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <thead>
+        <tr id="bar_head">
+          <th colspan="11">友情链接</th>
+        </tr>
+      </thead>
+
+      <tr align="center" valign="middle">
+          <td><a href="https://github.com/">GitHub</a></td>
+
+          <td><a href="https://www.ethereum.org">以太坊官网</a></td>
+
+          <td><a href="https://solidity.readthedocs.io/en/develop/">Solidity</a></td>
+
+          <td><a href="http://truffleframework.com/">Truffle FrameWork</a></td>
+
+          <td><a href="http://embark.readthedocs.io">Embark FrameWork</a></td>
+
+      </tr>
+      <tr align="center" valign="middle">
+
+          <td><a href="https://www.ibm.com/developerworks/community/groups/service/html/communityview?communityUuid=3302cc3b-074e-44da-90b1-5055f1dc0d9c&amp;lang=zh">IBM开源技术微讲堂</a></td>
+
+          <td><a href="https://www.bitcoin.com/">Bitcoin.com</a></td>
+
+          <td><a href="https://github.com/bitshares/bitshares1-core">bitshares1-core</a></td>
+
+          <td><a href="https://ipfs.io">ipfs官网</a></td>
+
+          <td><a href="http://ipfser.org">ipfs中文网</a></td>
+
+      </tr>
+    </table>
+
+    <div class="footer_div">
+      <p class="copyright text-muted">
+       Copyright &copy; 2018 程序媛技术博客  <!-- 京ICP备15065741号. 区块链部落QQ群：348924182 -->
+      </p>
+      <div align="right">
+        <link rel="stylesheet" href="http://cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <!-- 访问统计 -->
+        <span id="busuanzi_container_site_pv">
+            本站总访问量
+            <span id="busuanzi_value_site_pv"></span>次
+        </span>
+
+      </div>
+      <div>
+  </footer>
+</section>
+
+    </div>
+  </div>
+
+  <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+
+<script type="text/javascript" src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+  <script>
+    (function () {
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      } else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+</body>
+
+</html>

@@ -5,13 +5,200 @@
     <description>兔姐🐰，一个有信仰的程序媛，专注学习技术，热衷于知识分享，为开源贡献出一点点力量！</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 03 May 2018 20:49:48 +0800</pubDate>
-    <lastBuildDate>Thu, 03 May 2018 20:49:48 +0800</lastBuildDate>
+    <pubDate>Thu, 03 May 2018 23:39:01 +0800</pubDate>
+    <lastBuildDate>Thu, 03 May 2018 23:39:01 +0800</lastBuildDate>
     <generator>Jekyll v3.5.1</generator>
     
       <item>
-        <title>Golang Sort</title>
-        <description>&lt;h1 id=&quot;golang-实现多种排序算法&quot;&gt;Golang 实现多种排序算法&lt;/h1&gt;
+        <title>Golang学习笔记之3：结构体、面向对象思想</title>
+        <description>&lt;blockquote&gt;
+
+  &lt;p&gt;整理：程序媛🐰&lt;/p&gt;
+
+  &lt;p&gt;博客：http://cxytujie.github.io&lt;/p&gt;
+
+  &lt;p&gt;备注：如有错误，请指正，不断更新迭代&lt;/p&gt;
+
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;面向对象&quot;&gt;面向对象：&lt;/h3&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;面向对象：不是一门语言，也不是一门技术，是一种编程思路，把每一步封装成函数，然后调用。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;面向过程：只关心过程、步骤，只关注实现的过程，像一个计划表&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;思考方式&quot;&gt;思考方式：&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;考虑问题中有哪些对象（类）？&lt;/li&gt;
+  &lt;li&gt;这些对象是啥？属性————&amp;gt;字段，行为————&amp;gt;方法(函数)&lt;/li&gt;
+  &lt;li&gt;对象和对象的关系（类和类的关系）？是否包含？是否聚合？&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;类&quot;&gt;类&lt;/h3&gt;
+&lt;p&gt;类：同一类事物的抽象描述，类中包含两种：&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;静态属性：就是描述性字段&lt;/li&gt;
+  &lt;li&gt;动态属性：方法，即函数&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;对象&quot;&gt;对象&lt;/h3&gt;
+&lt;p&gt;对象：类中的一个具体的实例，使用类创建出来的就是对象&lt;/p&gt;
+
+&lt;h3 id=&quot;类和对象关系&quot;&gt;类和对象关系&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;类是对象的抽象描述，对象是类的一个具体实例&lt;/li&gt;
+  &lt;li&gt;将一类对象的共同特征，进行抽取————&amp;gt;定义类
+    抽象出： class —-&amp;gt;struct{
+             属性：字段，变量
+             行为：方法，函数
+                 }&lt;/li&gt;
+  &lt;li&gt;将类进行实例化————&amp;gt;创建对象
+         通过struct创建对象，p1:=Person{}
+         对象名.属性
+         对象名.方法名（）
+         直接调用的是函数
+         通过对象调用的是方法&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;面向对象三大特征&quot;&gt;面向对象三大特征&lt;/h3&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;1. 封装性
+		&quot;打包&quot;，函数，方法，结构体，对外留个口，不关系你里面是细节，只需要调用即可，不关心内部的逻辑细节
+2. 继承性
+		描述一个类和另一个类的关系
+		
+	    子类继承父类：
+		子类可以直接访问父类的属性和方法
+		子类可以新增自己的属性和方法
+		子类可以重写父类的方法
+		
+		靠结构体的嵌套：
+		匿名结构体字段：提升字段（子类里爹的字段，就是提升字段）
+		
+3. 多态性：接口,一类事物的多种形态
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h2 id=&quot;结构体&quot;&gt;结构体&lt;/h2&gt;
+&lt;h3 id=&quot;定义语法&quot;&gt;定义语法&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;type 结构体名  struct{
+				字段名   字段类型
+			}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h3 id=&quot;创建对象&quot;&gt;创建对象&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;对象名：=结构体名{val1，val2，val3}&lt;/li&gt;
+  &lt;li&gt;对象名:=结构体名{字段名：val1,字段名：val2}&lt;/li&gt;
+  &lt;li&gt;对象名：=结构体名{}
+ 对象名.字段名，进行赋值和取值&lt;/li&gt;
+  &lt;li&gt;对象名：=new（Type）	//创建一个指针&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;结构体参数类型&quot;&gt;结构体参数类型&lt;/h3&gt;
+&lt;p&gt;func fun1(P Person){ } //拷贝数值，默认传递是值类型传递
+func fun2(p *Person){ } //指针地址传递&lt;/p&gt;
+
+&lt;h3 id=&quot;深浅拷贝&quot;&gt;深浅拷贝&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;深拷贝：就是将值复制一份，改变此处的值不影响原来的值&lt;/li&gt;
+  &lt;li&gt;浅拷贝：将地址赋值个另一个变量，当一处对此地址进行改变时，远来的变量的值也变换了&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;匿名结构体和匿名字段&quot;&gt;匿名结构体和匿名字段&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;没有名字的结构体
+			a:=struct{字段的定义}{赋值}
+			func (){}()
+			匿名字段
+			type A struct{
+				string
+				int
+			}
+			b:=A{&quot;字符串&quot;,23}
+			b.string,b.int
+匿名字段可以理解为字段名和字段类型一致
+	
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h3 id=&quot;类和类的关系结构体嵌套&quot;&gt;类和类的关系：（结构体嵌套）&lt;/h3&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;		1、聚合关系（has a ）：讲一个类作为另一个类的属性字段
+
+		2、继承性(is a )：(嵌套)描述两个类的关系，一个类作为另一个类的子类，子类可以使用父类的功能
+		继承的意义：
+		1. 避免重复代码（子类）
+		2. 扩展类的功能（父类）
+		子类 is a 父类（能说的通就可以使用继承）
+		go语言没有真正的继承，靠两个结构体的嵌套模拟
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;程序设计&quot;&gt;程序设计&lt;/h3&gt;
+
+&lt;p&gt;通过面向对象的思维方式设计程序三步走：
+			1. 创建struct结构体
+			2. 设计结构体的功能方法
+			3. 创建结构体对象&lt;/p&gt;
+
+&lt;h3 id=&quot;代码示例聚合继承&quot;&gt;代码示例（聚合、继承）&lt;/h3&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;package main
+
+import (
+	&quot;fmt&quot;
+)
+
+type A struct {
+	name string
+	age  int
+}
+
+type B struct {
+	a A    //模拟聚合
+}
+
+type C struct {
+	A  //模拟继承		有提升字段
+}
+
+func main() {
+	//b:=B{}
+	b := B{A{&quot;Jack&quot;, 20}}          //多层嵌套结构体初始化
+	fmt.Println(b.a.name, b.a.age) //输出Jack 20
+	c := C{A{&quot;Bob&quot;, 18}}
+	//匿名提升字段可以通过结构体的名字进行访问
+	fmt.Println(c.A.name, c.A.age) //输出Bob 18
+	//匿名提升字段也可以直接访问其字段
+	fmt.Println(c.name, c.age)
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+</description>
+        <pubDate>Thu, 03 May 2018 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2018/05/03/golang-struct/</link>
+        <guid isPermaLink="true">http://localhost:4000/2018/05/03/golang-struct/</guid>
+        
+        <category>golang</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>Golang学习笔记之2：多种排序算法</title>
+        <description>&lt;blockquote&gt;
+
+  &lt;p&gt;整理：程序媛🐰&lt;/p&gt;
+
+  &lt;p&gt;博客：http://cxytujie.github.io&lt;/p&gt;
+
+  &lt;p&gt;备注：如有错误，请指正，不断更新迭代&lt;/p&gt;
+
+&lt;/blockquote&gt;
 
 &lt;h3 id=&quot;冒泡排序&quot;&gt;冒泡排序&lt;/h3&gt;
 &lt;p&gt;冒泡排序思想：从前到后，依次两两比较，两层循环，一层控制比较趟数，一层控制前后&lt;code class=&quot;highlighter-rouge&quot;&gt;两两比较&lt;/code&gt;&lt;/p&gt;
@@ -70,7 +257,6 @@ func sortByInsert(s []int64) {
 
 &lt;h3 id=&quot;快速排序&quot;&gt;快速排序&lt;/h3&gt;
 &lt;blockquote&gt;
-
   &lt;p&gt;排序算法主要思路：&lt;/p&gt;
   &lt;ol&gt;
     &lt;li&gt;假定起始位置位哨兵&lt;/li&gt;
@@ -81,6 +267,7 @@ func sortByInsert(s []int64) {
     &lt;li&gt;从前往后，逐个遍历比较，遇到大于哨兵的就暂停，且进行交换&lt;/li&gt;
     &lt;li&gt;直到low和high相遇，停止循环，返回low的位置，即下次的一分为二时使用的分界点&lt;/li&gt;
   &lt;/ol&gt;
+
 &lt;/blockquote&gt;
 
 &lt;p&gt;代码如下：&lt;/p&gt;
@@ -139,9 +326,201 @@ func quickSort(s []int64, low, high int64) { //start起始点，end终止点
 &lt;/div&gt;
 
 </description>
-        <pubDate>Wed, 04 Apr 2018 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2018/04/04/golang-sort/</link>
-        <guid isPermaLink="true">http://localhost:4000/2018/04/04/golang-sort/</guid>
+        <pubDate>Thu, 03 May 2018 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2018/05/03/golang-sort/</link>
+        <guid isPermaLink="true">http://localhost:4000/2018/05/03/golang-sort/</guid>
+        
+        <category>golang</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>Golang学习笔记之1：数组、切片、map内存原理</title>
+        <description>&lt;blockquote&gt;
+
+  &lt;p&gt;整理：程序媛🐰&lt;/p&gt;
+
+  &lt;p&gt;博客：http://cxytujie.github.io&lt;/p&gt;
+
+  &lt;p&gt;备注：如有错误，请指正，不断更新迭代&lt;/p&gt;
+
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;1数组&quot;&gt;1数组：&lt;/h3&gt;
+&lt;p&gt;在内存中开辟一块连续的存储地址&lt;/p&gt;
+
+&lt;h4 id=&quot;11特点&quot;&gt;1.1特点：&lt;/h4&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;有序、可重复、数据类型一致&lt;/li&gt;
+  &lt;li&gt;定长：数组一旦创建长度，不能更改长度大小，但是可以修改其存储的内容&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;12数组语法&quot;&gt;1.2数组语法：&lt;/h4&gt;
+
+&lt;h4 id=&quot;13-定义数组方式&quot;&gt;1.3 定义数组方式&lt;/h4&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var arr [10] int               //默认为0。0。0。0。
+var arr1=[10] int {1,2,3,4,5,6}       //值为1,2,3,4,5,6 ，0，0，0，0，
+arr2:=[10] int {1,2,3,4,5,6}      //推导类型
+arr3:=[...] int {1,2,3,4,5,6}     //长度为实际存储的长度
+arr4:=[...] int {1:9,10:3}       //指定下标位置赋值
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h4 id=&quot;14-数组存取方式&quot;&gt;1.4 数组存取方式&lt;/h4&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;arr[2]=5
+
+//数组是值传递，是将此数组的值拷贝了一份，赋给其他变量数组
+temp:=[10] int {}
+temp=arr
+temp[0]=99    //temp的赋值不影响原数组的值
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h4 id=&quot;15-数组的循环操作---range方式&quot;&gt;1.5 数组的循环操作   range方式&lt;/h4&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;for index,value:=range arr{
+fmt.Println(index) //数组下标
+fmt.Println(value) //数组元素值
+}
+
+//数组len(),cap()，数组的长度和容量一致的。
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;2-切片&quot;&gt;2 切片：&lt;/h3&gt;
+&lt;p&gt;在内存中开辟一块连续的存储地址,长度不固定&lt;/p&gt;
+
+&lt;h4 id=&quot;21-切片特点&quot;&gt;2.1 切片特点：&lt;/h4&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;变长：长度和容量都可以更改&lt;/li&gt;
+  &lt;li&gt;引用类型（操作的是指针）&lt;/li&gt;
+  &lt;li&gt;有序&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;22-创建切片&quot;&gt;2.2 创建切片：&lt;/h4&gt;
+
+&lt;p&gt;#####2.2.1 定义切片的方式&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var slice [] int //不写空间大小 ,len=0,cap=0     暂时还没有开辟空间 ，不能够操作赋值的情况
+fmt.Println(slice, len(slice), cap(slice))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h5 id=&quot;222-特别注意&quot;&gt;2.2.2 特别注意：&lt;/h5&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;slice[0]=1 //暂时还没有开辟空间 ，不能够操作赋值的情况，会提示数组越界错误
+slice[1]=1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h5 id=&quot;223-make方式开辟切片空间&quot;&gt;2.2.3 make方式开辟切片空间&lt;/h5&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//make方式开辟空间，make([]类型，长度，容量)
+slice = make([]int, 5, 10) //开辟切片空间后，才可以进行赋值操作
+slice[0] = 1               //
+slice[1] = 1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h5 id=&quot;224-定义切片时直接初始化&quot;&gt;2.2.4 定义切片时，直接初始化&lt;/h5&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;slice2 := []int{1, 2, 3, 45, 6}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h5 id=&quot;225-基于数组的基础上创建切片&quot;&gt;2.2.5 基于数组的基础上创建切片&lt;/h5&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;arr6 := [10]int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+slice3 := arr6[2:7]
+fmt.Println(arr6)                     //[1 2 3 4 5 6 7 8 9 10]
+fmt.Println(slice3)                   //[3 4 5 6 7]
+fmt.Println(len(slice3), cap(slice3)) //len=5  cap=8
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h4 id=&quot;23切片内存原理非常重要&quot;&gt;2.3切片内存原理（非常重要）&lt;/h4&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;slice3[0] = 100 //切片的下标以自身为准，从0开始  赋值操作时注意不要超过切片的下标index值
+
+//修改基于数组的切片，数组大小空间范围内，修改切片时，原数组的值也相应变化
+
+fmt.Println(arr6)   //[1 2 100 4 5 6 7 8 9 10]
+fmt.Println(slice3) //[100 4 5 6 7]
+
+//当切片超过len,但是小于cap的操作
+//切片通过append方式增加长度
+
+slice3 = append(slice3, 88888) //切片追加元素，但是因为切片此时的指针定位，还在切片cap范围内，所以，不需要另外拷贝数据分配新地址空间，所以原数组受影响
+fmt.Println(arr6)              //[1 2 100 4 5 6 7 88888 9 10]
+fmt.Println(slice3)            //[100 4 5 6 7 88888]
+
+//当超过cap时，拷贝数据到新的地址空间，此时不影响原数组
+slice3 = append(slice3, 99, 99, 99, 99, 99, 99, 99, 99)
+fmt.Println(arr6)   //[1 2 100 4 5 6 7 88888 9 10]
+fmt.Println(slice3) //[100 4 5 6 7 88888 99 99 99 99 99 99 99 99]
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;3-map集合映射&quot;&gt;3 Map集合（映射）：&lt;/h3&gt;
+
+&lt;h4 id=&quot;31特点&quot;&gt;3.1特点：&lt;/h4&gt;
+&lt;ol&gt;
+  &lt;li&gt;存储无序的键值对&lt;/li&gt;
+  &lt;li&gt;键值对一一对应&lt;/li&gt;
+  &lt;li&gt;键不能重复，重复了就覆盖&lt;/li&gt;
+  &lt;li&gt;无序&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;32-创建map&quot;&gt;3.2 创建map:&lt;/h4&gt;
+&lt;h5 id=&quot;321-方式一&quot;&gt;3.2.1 方式一&lt;/h5&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//方式一：定义map变量，但是未开辟存储空间，即空map  nil
+var map1 map[int]string //map[]
+fmt.Printf(&quot;%p&quot;, &amp;amp;map1)
+map1[1] = &quot;hello&quot; //   未开辟空间时，不可以进行赋值操作
+fmt.Println(map1) //panic: assignment to entry in nil map
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h5 id=&quot;322方式二&quot;&gt;3.2.2方式二&lt;/h5&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//方式二：直接初始化方式
+map2 := map[int]string{1: &quot;hello&quot;, 2: &quot;world&quot;, 3: &quot;!&quot;}
+fmt.Println(map2)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h5 id=&quot;323方式三&quot;&gt;3.2.3方式三&lt;/h5&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//方式三：make开辟空间方式
+map3 := make(map[int]string) //开辟空间后即可以赋值
+fmt.Println(map3)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h4 id=&quot;33添加元素&quot;&gt;3.3添加元素&lt;/h4&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;map3[1] = &quot;你好&quot; //添加元素
+map3[2] = &quot;呀&quot;
+fmt.Println(map3) //map[1:你好 2:呀]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h4 id=&quot;34删除元素&quot;&gt;3.4删除元素&lt;/h4&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//删除map中的元素
+delete(map3, 2)   //删除操作
+fmt.Println(map3) //map[1:你好]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h4 id=&quot;35注意事项&quot;&gt;3.5注意事项&lt;/h4&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//获取map操作，当key不存在时，会报错，可以使用ok的方式判断map键值对是否存在
+value, ok := map3[1] //你好 true
+fmt.Println(value, ok)
+value1, ok1 := map3[5] // false
+fmt.Println(value1, ok1)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h4 id=&quot;36for-range-遍历map&quot;&gt;3.6For range 遍历map&lt;/h4&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//for range方式遍历map
+for key, value := range map3 { //key 键   value 值
+fmt.Println(key, value) //1 你好
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+</description>
+        <pubDate>Thu, 03 May 2018 00:00:00 +0800</pubDate>
+        <link>http://localhost:4000/2018/05/03/golang-slice-map/</link>
+        <guid isPermaLink="true">http://localhost:4000/2018/05/03/golang-slice-map/</guid>
+        
+        <category>golang</category>
         
         
       </item>

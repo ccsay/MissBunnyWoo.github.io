@@ -40,7 +40,6 @@
   <!-- 站点统计 -->
   <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
   </script>
- 
   <!-- 百度统计 -->
   
   <script>
@@ -198,21 +197,63 @@
   <ol class="post-list">
     
     <li>
-      <h2 class="post-list__post-title post-title"><a href="/2018/04/04/golang-sort/" title="访问 Golang Sort">Golang Sort</a></h2>
-      <p class="excerpt">Golang 实现多种排序算法冒泡排序冒泡排序思想：从前到后，依次两两比较，两层循环，一层控制比较趟数，一层控制前后两两比较func sortByBubble(s []int64) {	for i := 0; i &lt; len(s); i++ { //i控制比较趟数		for j := 0; j &lt; len(s)-i-1; j++ { //j控制从前到后，两两比较			if s[j] &gt; s[j+1] { //两两比较				s[j], s[j+1] = s[j+1], s...&hellip;</p>
+      <h2 class="post-list__post-title post-title"><a href="/2018/05/03/golang-struct/" title="访问 Golang学习笔记之3：结构体、面向对象思想">Golang学习笔记之3：结构体、面向对象思想</a></h2>
+      <p class="excerpt">  整理：程序媛🐰  博客：http://cxytujie.github.io  备注：如有错误，请指正，不断更新迭代面向对象：  面向对象：不是一门语言，也不是一门技术，是一种编程思路，把每一步封装成函数，然后调用。  面向过程：只关心过程、步骤，只关注实现的过程，像一个计划表思考方式：  考虑问题中有哪些对象（类）？  这些对象是啥？属性————&gt;字段，行为————&gt;方法(函数)  对象和对象的关系（类和类的关系）？是否包含？是否聚合？类类：同一类事物的抽象描述，类中包含两...&hellip;</p>
       <div class="post-list__meta">        
-        <time datetime="2018-04-04 00:00:00 +0800" class="post-list__meta--date date">
+        <time datetime="2018-05-03 00:00:00 +0800" class="post-list__meta--date date">
           <img src="/images/calendar.png" width="20px" /> 
-          2018-04-04</time> 
+          2018-05-03</time> 
         <div class = "tag-img-icon">
           <img src="/images/tag-icon.svg" width="20px" /> 
         </div>
         <a href="/tags">
           <div class = "post-list-icon-mate">
-            <span class="post-list__meta--tags-right"></span>
+            <span class="post-list__meta--tags-right">golang</span>
           </div>
           <div class = "post-list-small-mate">
-          <a class="btn-border-small" href=/2018/04/04/golang-sort/>阅读全文 » </a>
+          <a class="btn-border-small" href=/2018/05/03/golang-struct/>阅读全文 » </a>
+          </div>
+      </div>
+      <hr class="post-list__divider" />
+    </li>
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2018/05/03/golang-sort/" title="访问 Golang学习笔记之2：多种排序算法">Golang学习笔记之2：多种排序算法</a></h2>
+      <p class="excerpt">  整理：程序媛🐰  博客：http://cxytujie.github.io  备注：如有错误，请指正，不断更新迭代冒泡排序冒泡排序思想：从前到后，依次两两比较，两层循环，一层控制比较趟数，一层控制前后两两比较func sortByBubble(s []int64) {	for i := 0; i &lt; len(s); i++ { //i控制比较趟数		for j := 0; j &lt; len(s)-i-1; j++ { //j控制从前到后，两两比较			if s[j] &gt;...&hellip;</p>
+      <div class="post-list__meta">        
+        <time datetime="2018-05-03 00:00:00 +0800" class="post-list__meta--date date">
+          <img src="/images/calendar.png" width="20px" /> 
+          2018-05-03</time> 
+        <div class = "tag-img-icon">
+          <img src="/images/tag-icon.svg" width="20px" /> 
+        </div>
+        <a href="/tags">
+          <div class = "post-list-icon-mate">
+            <span class="post-list__meta--tags-right">golang</span>
+          </div>
+          <div class = "post-list-small-mate">
+          <a class="btn-border-small" href=/2018/05/03/golang-sort/>阅读全文 » </a>
+          </div>
+      </div>
+      <hr class="post-list__divider" />
+    </li>
+    
+    <li>
+      <h2 class="post-list__post-title post-title"><a href="/2018/05/03/golang-slice-map/" title="访问 Golang学习笔记之1：数组、切片、map内存原理">Golang学习笔记之1：数组、切片、map内存原理</a></h2>
+      <p class="excerpt">  整理：程序媛🐰  博客：http://cxytujie.github.io  备注：如有错误，请指正，不断更新迭代1数组：在内存中开辟一块连续的存储地址1.1特点：  有序、可重复、数据类型一致  定长：数组一旦创建长度，不能更改长度大小，但是可以修改其存储的内容1.2数组语法：1.3 定义数组方式var arr [10] int               //默认为0。0。0。0。var arr1=[10] int {1,2,3,4,5,6}       //值为1,2,3,4,5...&hellip;</p>
+      <div class="post-list__meta">        
+        <time datetime="2018-05-03 00:00:00 +0800" class="post-list__meta--date date">
+          <img src="/images/calendar.png" width="20px" /> 
+          2018-05-03</time> 
+        <div class = "tag-img-icon">
+          <img src="/images/tag-icon.svg" width="20px" /> 
+        </div>
+        <a href="/tags">
+          <div class = "post-list-icon-mate">
+            <span class="post-list__meta--tags-right">golang</span>
+          </div>
+          <div class = "post-list-small-mate">
+          <a class="btn-border-small" href=/2018/05/03/golang-slice-map/>阅读全文 » </a>
           </div>
       </div>
       <hr class="post-list__divider" />

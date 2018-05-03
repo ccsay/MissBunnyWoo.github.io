@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>Golang学习笔记之2：多种排序算法</title>
+  <meta name="description" content="自己实现冒泡排序、选择排序、插入排序、快速排序，并理出一套自己的思路，便于深刻记忆">
+  <meta name="author" content="兔姐">
+
+  <meta name="keywords" content="Golang学习笔记之2：多种排序算法"
+  />
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Golang学习笔记之2：多种排序算法">
+  <meta name="twitter:description" content="自己实现冒泡排序、选择排序、插入排序、快速排序，并理出一套自己的思路，便于深刻记忆">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Golang学习笔记之2：多种排序算法">
+  <meta property="og:description" content="自己实现冒泡排序、选择排序、插入排序、快速排序，并理出一套自己的思路，便于深刻记忆">
+  <meta property="og:site_name" content="Golang学习笔记之2：多种排序算法e"
+  />
+
+
+  <link rel="icon" type="image/png" href="/images/favicon.png" />
+  <link href="/images/favicon.png" rel="shortcut icon" type="image/png">
+
+
+  <link rel="stylesheet" href=" /css/main.css ">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="canonical" href="http://localhost:4000/2018/05/03/golang-sort/">
+  <link rel="alternate" type="application/rss+xml" title="程序媛技术博客" href="http://localhost:4000 /feed.xml
+    ">
+
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+
+  <!-- 站点统计 -->
+  <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>
+  <!-- 百度统计 -->
+  
+  <script>
+    var _hmt = _hmt || [];
+    (function () {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?f3290601666dc2ca016a38c340c144f1";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+  
+
+  <!-- google 统计 -->
+  
+  <script>
+    (function (i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r;
+      i[r] = i[r] || function () {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date();
+      a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+      a.async = 1;
+      a.src = g;
+      m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+    ga('create', 'UA-104237177-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+  
+
+  <script>
+    (function () {
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      } else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+</head>
+
+
+<body>
+
+  <span class="mobile btn-mobile-menu">        
+      <div class="nav_container">
+         <nav class="nav-menu-item" style = "float:right">
+            <i class="nav-menu-item">
+              <a href="/#blog" title="" class="blog-button">  博客主页
+              </a>
+            </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/archive" title="archive" class="btn-mobile-menu__icon">
+                      所有文章
+                  </a>
+                </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/tags" title="tags" class="btn-mobile-menu__icon">
+                      分类
+                  </a>
+                </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/about" title="about" class="btn-mobile-menu__icon">
+                      关于我
+                  </a>
+                </i>
+            
+          </nav>
+          
+      </div>
+    </span> <header class="panel-cover panel-cover--collapsed" style="background-image: url('/images/background-cover.jpg')">
+  <div class="panel-main">
+    <div class="panel-main__inner panel-inverted">
+      <div class="panel-main__content">
+        <!-- 头像效果-start -->
+        <div class="ih-item circle effect right_to_left">
+          <a href="/#blog" title="前往 程序媛技术博客 的主页" class="blog-button">
+            <div class="img"><img src="/images/avatar.jpg" alt="img"></div>
+            <div class="info">
+              <div class="info-back">
+                <h2 style="font-size: 14px">
+                   兔姐🐰 
+                </h2>´
+                <p style="font-size: 6px">
+                   程序媛|兔姐 
+                </p>
+              </div>
+            </div>
+          </a>
+        </div>
+        <!-- 头像效果-end -->
+        <h1 class="panel-cover__title panel-title"><a href="/#blog" title="link to homepage for 程序媛技术博客" class="blog-button">程序媛技术博客</a></h1>
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">兔姐🐰，一个有信仰的程序媛，专注学习技术，热衷于知识分享，为开源贡献出一点点力量！</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" /> 
+
+
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">博客主页</a></li>
+                
+                <li class="navigation__item"><a href="/archive" title="archive">所有文章</a></li>
+                
+                <li class="navigation__item"><a href="/tags" title="tags">分类</a></li>
+                
+                <li class="navigation__item"><a href="/about" title="about">关于我</a></li>
+                
+              </ul>
+            </nav>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:center;-webkit-justify-content:center">
+          <div style="display:flex;flex-direction:column;align-items:center;-webkit-flex-direction:column;-webkit-align-items:center;margin-right:10px">
+            <img src="/images/weixin.png" style="width:120px;height:120px;margin-top:30px;margin-bottom:10px" />
+            <span class="panel-cover__subtitle panel-subtitle" style="font-size: 12px">微信</span>
+          </div>
+          <!-- <div style="display:flex;flex-direction:column;align-items:center;-webkit-flex-direction:column;-webkit-align-items:center;margin-left:10px">
+            <img src="/images/lianhu.jpg" style="width:120px;height:120px;margin-top:30px;margin-bottom:10px" />
+            <span class="panel-cover__subtitle panel-subtitle" style="font-size: 12px">QQ</span>
+          </div> -->
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="panel-cover--overlay cover-clear"></div>
+  
+
+  </div>
+</header>
+
+
+  <div class="content-wrapper">
+    <div class="content-wrapper__inner">
+      <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <h1 class="post-title">Golang学习笔记之2：多种排序算法</h1>
+    <div class="post-meta">
+      <img src="/images/calendar.png" width="20px"/>
+      <time datetime="2018-05-03 00:00:00 +0800" itemprop="datePublished" class="post-meta__date date">2018-05-03</time>
+
+      <span id="busuanzi_container_page_pv"> | 阅读：<span id="busuanzi_value_page_pv"></span>次</span>
+    </p>
+    </div>
+  </header>
+
+  <section class="post">
+    <blockquote>
+
+  <p>整理：程序媛🐰</p>
+
+  <p>博客：http://cxytujie.github.io</p>
+
+  <p>备注：如有错误，请指正，不断更新迭代</p>
+
+</blockquote>
+
+<h3 id="冒泡排序">冒泡排序</h3>
+<p>冒泡排序思想：从前到后，依次两两比较，两层循环，一层控制比较趟数，一层控制前后<code class="highlighter-rouge">两两比较</code></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>func sortByBubble(s []int64) {
+	for i := 0; i &lt; len(s); i++ { //i控制比较趟数
+		for j := 0; j &lt; len(s)-i-1; j++ { //j控制从前到后，两两比较
+			if s[j] &gt; s[j+1] { //两两比较
+				s[j], s[j+1] = s[j+1], s[j]
+			}
+		}
+	}
+	fmt.Println(s)
+
+}
+
+
+</code></pre>
+</div>
+<h3 id="选择排序">选择排序</h3>
+<p>选择排序思想：假定位前面是即将要存有序的位置，后面是无序的位置。从没有排序的序列中，选择一个最小的，依次插入到前面的有序位置的后边。
+` 从乱序中找到目标 `</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>//选择排序：假定位前面是即将要存有序的位置，后面是无序的位置。从没有排序的序列中，选择一个最小的，依次插入到前面的有序位置的后边
+func sortBySelect(s []int64) {
+	for i := 0; i &lt; len(s); i++ { //控制比较的趟数,守住不动的定点
+		for j := i + 1; j &lt; len(s); j++ { //从后面挑选最小的
+			if s[i] &gt; s[j] { //拿定点，跟后面的比较，最小的就交换位置
+				s[i], s[j] = s[j], s[i]
+			}
+		}
+	}
+	fmt.Println(s)
+}
+
+</code></pre>
+</div>
+
+<h3 id="插入排序">插入排序</h3>
+<p>插入排序思想：从后面乱序中，依次取出一个然后插入到前面排序的位置</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>//插入排序：从后面乱序中，依次取出一个然后插入到前面排序的位置，
+func sortByInsert(s []int64) {
+	for i := 1; i &lt; len(s); i++ { //i控制后面乱序和前面顺序的分界点，i控制分界点的移动
+		if s[i-1] &gt; s[i] { //判断相邻的位置是否大小顺序正确，否则就要找到正确的位置
+			for j := i - 1; j &gt;= 0 &amp;&amp; s[j] &gt; s[j+1]; j-- { //j控制位置的移动
+				s[j+1], s[j] = s[j], s[j+1] //以交换的方式做了简单的数据移动
+			}
+		}
+	}
+	fmt.Println(s)
+}
+
+</code></pre>
+</div>
+
+<h3 id="快速排序">快速排序</h3>
+<blockquote>
+  <p>排序算法主要思路：</p>
+  <ol>
+    <li>假定起始位置位哨兵</li>
+    <li>写一个方法，作用用来确定中介的位置，并且进行同时的排序功能，返回中介的位置</li>
+    <li>递归方式分别调用比中介点小的部分，和比中介点大的部分，一分为二的思想</li>
+    <li>在求中介值时，始终明确low&lt;high，使用一个temp变量存储哨兵的值</li>
+    <li>从后往前，逐个遍历比较，遇到小于哨兵的就暂停，且进行交换</li>
+    <li>从前往后，逐个遍历比较，遇到大于哨兵的就暂停，且进行交换</li>
+    <li>直到low和high相遇，停止循环，返回low的位置，即下次的一分为二时使用的分界点</li>
+  </ol>
+
+</blockquote>
+
+<p>代码如下：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>//快速排序：
+func quickSort(s []int64, low, high int64) { //start起始点，end终止点
+	if low &lt; high {
+		flag := partition(s, low, high) //把切片一分为二，分别对两部分进行递归排序
+		quickSort(s, low, flag-1)       //低的部分进行排序
+		quickSort(s, flag+1, high)      //高的部分进行排序
+	}
+
+}
+
+
+
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>func partition(s []int64, low, high int64) int64 {
+	//分别控制两个点，一个从前往后遍历，一个从后往前遍历
+	//假设我们每次将序列中的第一个元素作为定位排序的目标
+	tempValue := s[low] //哨兵
+	for low &lt; high { //当两边相遇时，结束本趟比较，直到low和high相遇时本趟排序结束
+		for s[high] &gt; tempValue &amp;&amp; low &lt; high { //从后往前遍历，找比哨兵小的数
+			high--
+		}
+		tempValue, s[high] = s[high], tempValue //遇到比哨兵小的数则暂停，进行交换
+
+		for s[low] &lt; tempValue &amp;&amp; low &lt; high { //然后，从前往后遍历，找比哨兵大的数
+			low++
+		}
+		s[low], tempValue = tempValue, s[low] //遇到比哨兵大的，就暂停，进行交换
+		fmt.Println(s)
+	}
+
+	return low //返回本次排序的能够确定最终位置的元素位置
+}
+
+</code></pre>
+</div>
+
+<p>测试使用的main函数：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>func main() {
+	s := []int64{6, 1, 11, 2, 7, 9, 3, 4, 5, 10, 8}
+	fmt.Println(s)
+	sortByBubble(s)
+	sortBySelect(s)
+	sortByInsert(s)
+	quickSort(s, 0, int64(len(s)-1))
+	fmt.Println(s)
+}
+
+</code></pre>
+</div>
+
+
+  </section>
+  <h3 style="color:blue"><strong>版权声明：博客文章版权归博主所有，未经授权，禁止转载，转载请注明出处</strong></h3>
+</article>
+
+<section>
+
+            <div class="content-play">
+              <p><a href="javascript:void(0)" onclick="dashangToggle()" class="dashang" title="打赏兔姐一杯咖啡嘛？">打赏兔姐一杯咖啡☕️</a></p>
+              <div class="hide_box-play"></div>
+              <div class="shang_box-play">
+                <a class="shang_close-play" href="javascript:void(0)" onclick="dashangToggle()" title="关闭"><img src="/images/payimg/close.jpg" alt="取消" /></a>
+                <div class="shang_tit-play">
+                  <p>感谢您的支持，我会继续努力的!</p>
+                </div>
+                <div class="shang_payimg">
+                    <img src="/images/payimg/zhifubaopay.png" alt="扫码支持" title="扫一扫" />
+                </div>
+              <div class="shang_payimg">
+                    <img src="/images/payimg/weixinpay.png" alt="扫码支持" title="扫一扫" />
+                </div>
+                <div class="pay_explain">扫码打赏，你说多少就多少</div>
+                <div class="shang_payselect">
+                  <div class="pay_item checked" data-id="alipay">
+                    <span class="pay_logo"><img src="/images/payimg/alipay.jpg" alt="支付宝" /></span>
+                  </div>
+                  <div class="pay_item" data-id="weipay">
+                    <span class="pay_logo"><img src="/images/payimg/wechat.jpg" alt="微信" /></span>
+                  </div>
+                </div>
+                <div class="shang_info-play">
+                  <p>打开<span id="shang_pay_txt">支付宝</span>扫一扫，即可进行扫码打赏哦</p>
+                </div>
+              </div>
+            </div>
+            <script type="text/javascript">
+            function dashangToggle(){
+              $(".hide_box-play").fadeToggle();
+              $(".shang_box-play").fadeToggle();
+            }
+            </script>
+
+            <div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';"></div>
+
+            <style type="text/css">
+              .content-play{width:80%;margin-top: 20px;margin-bottom: 10px;height:40px;}
+              .hide_box-play{z-index:999;filter:alpha(opacity=50);background:#666;opacity: 0.5;-moz-opacity: 0.5;left:0;top:0;height:99%;width:100%;position:fixed;display:none;}
+              .shang_box-play{width:540px;height:540px;padding:10px;background-color:#fff;border-radius:10px;position:fixed;z-index:1000;left:50%;top:50%;margin-left:-280px;margin-top:-280px;border:1px dotted #dedede;display:none;}
+              .shang_box-play img{border:none;border-width:0;}
+              .dashang{display:block;width:150px;margin:5px auto;height:28px;line-height:25px;padding:10px;background-color:pink;color:darkorchid;text-align:center;text-decoration:none;border-radius:10px;font-weight:bold;font-size:16px;transition: all 0.3s;}
+              .dashang:hover{opacity:0.8;padding:15px;font-size:18px;}
+              .shang_close-play{float:right;display:inline-block;
+                margin-right: 10px;margin-top: 20px;
+              }
+              .shang_logo{display:block;text-align:center;margin:20px auto;}
+              .shang_tit-play{width: 100%;height: 75px;text-align: center;line-height: 66px;color: #a3a3a3;font-size: 16px;background: url('/images/payimg/cy-reward-title-bg.jpg');font-family: 'Microsoft YaHei';margin-top: 7px;margin-right:2px;}
+              .shang_tit-play p{color:#a3a3a3;text-align:center;font-size:16px;}
+              .shang_payimg{width:140px;padding:10px;padding-left: 80px; /*border:6px solid #EA5F00;**/margin:0 auto;border-radius:3px;height:140px;display:inline-block;}
+              .shang_payimg img{display:inline-block;margin-right:10px;float:left;text-align:center;width:140px;height:140px; }
+              .pay_explain{text-align:center;margin:10px auto;font-size:12px;color:#545454;}
+              .shang_payselect{text-align:center;margin:0 auto;margin-top:40px;cursor:pointer;height:60px;width:500px;margin-left:110px;}
+              .shang_payselect .pay_item{display:inline-block;margin-right:140px;float:left;}
+              .shang_info-play{clear:both;}
+              .shang_info-play p,.shang_info-play a{color:#C3C3C3;text-align:center;font-size:12px;text-decoration:none;line-height:2em;}
+            </style>
+
+       <ul class="pager">
+        
+        <li class="previous">
+            <a href="/2018/05/03/golang-slice-map/" data-toggle="tooltip" data-placement="top" title="Golang学习笔记之1：数组、切片、map内存原理">上一篇：  <span>Golang学习笔记之1：数组、切片、map内存原理</span>
+            </a>
+        </li>
+        
+        
+        <li class="next">
+            <a href="/2018/05/03/golang-struct/" data-toggle="tooltip" data-placement="top" title="Golang学习笔记之3：结构体、面向对象思想">下一篇：  <span>Golang学习笔记之3：结构体、面向对象思想</span>
+            </a>
+        </li>
+        
+    </ul>
+</section>
+
+<section class="post-comments">
+  <!--PC和WAP自适应版-->
+<div id="SOHUCS" sid=Golang学习笔记之2：多种排序算法 ></div>
+<script type="text/javascript">
+(function(){
+var appid = 'cytfSz8yx';
+var conf = 'prod_ad710bf09d342725ed536beddc68aa27';
+var width = window.innerWidth || document.documentElement.clientWidth;
+// if (width < 960) {
+// window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("http://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })();
+ </script>
+
+
+
+
+</section>
+
+ <section class="footer">
+  <footer>
+    <div class="footer_div">
+      <nav class="cover-navigation navigation--social">
+        <ul class="navigation">
+
+           
+          <!-- Github -->
+          <li class="navigation__item_social">
+            <a href="https://github.com/MoliWu1993" title="@MoliWu1993 的 Github" target="_blank">
+              <i class='social fa fa-github fa-2x'></i>
+              <span class="label">Github</span>
+            </a>
+          </li>
+            
+
+          <!-- RSS -->
+          <li class="navigation__item_social">
+            <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+              <i class='social fa fa-rss fa-2x'></i>
+              <span class="label">RSS</span>
+            </a>
+          </li>
+
+          
+          <!-- Email -->
+          <li class="navigation__item_social">
+            <a href="mailto:1142155503@qq.com" title="Contact me">
+              <i class='social fa fa-envelope fa-2x'></i>
+              <span class="label">Email</span>
+            </a>
+          </li>
+          
+
+        </ul>
+      </nav>
+
+    </div>
+
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <thead>
+        <tr id="bar_head">
+          <th colspan="11">友情链接</th>
+        </tr>
+      </thead>
+
+      <tr align="center" valign="middle">
+          <td><a href="https://github.com/">GitHub</a></td>
+
+          <td><a href="https://www.ethereum.org">以太坊官网</a></td>
+
+          <td><a href="https://solidity.readthedocs.io/en/develop/">Solidity</a></td>
+
+          <td><a href="http://truffleframework.com/">Truffle FrameWork</a></td>
+
+          <td><a href="http://embark.readthedocs.io">Embark FrameWork</a></td>
+
+      </tr>
+      <tr align="center" valign="middle">
+
+          <td><a href="https://www.ibm.com/developerworks/community/groups/service/html/communityview?communityUuid=3302cc3b-074e-44da-90b1-5055f1dc0d9c&amp;lang=zh">IBM开源技术微讲堂</a></td>
+
+          <td><a href="https://www.bitcoin.com/">Bitcoin.com</a></td>
+
+          <td><a href="https://github.com/bitshares/bitshares1-core">bitshares1-core</a></td>
+
+          <td><a href="https://ipfs.io">ipfs官网</a></td>
+
+          <td><a href="http://ipfser.org">ipfs中文网</a></td>
+
+      </tr>
+    </table>
+
+    <div class="footer_div">
+      <p class="copyright text-muted">
+       Copyright &copy; 2018 程序媛技术博客  <!-- 京ICP备15065741号. 区块链部落QQ群：348924182 -->
+      </p>
+      <div align="right">
+        <link rel="stylesheet" href="http://cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <!-- 访问统计 -->
+        <span id="busuanzi_container_site_pv">
+            本站总访问量
+            <span id="busuanzi_value_site_pv"></span>次
+        </span>
+
+      </div>
+      <div>
+  </footer>
+</section>
+
+    </div>
+  </div>
+
+  <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+
+<script type="text/javascript" src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+  <script>
+    (function () {
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      } else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+</body>
+
+</html>
