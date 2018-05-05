@@ -3,23 +3,23 @@
   <channel>
     <title>程序媛博客</title>
     <description>兔姐🐰，一枚有信仰的程序媛，专注学习技术，热衷于知识分享，为开源贡献出一点点力量！</description>
-    <link>https://www.jianshu.com/u/e9eb7284f689/</link>
-    <atom:link href="https://www.jianshu.com/u/e9eb7284f689/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sat, 05 May 2018 11:50:58 +0800</pubDate>
-    <lastBuildDate>Sat, 05 May 2018 11:50:58 +0800</lastBuildDate>
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Sat, 05 May 2018 11:56:57 +0800</pubDate>
+    <lastBuildDate>Sat, 05 May 2018 11:56:57 +0800</lastBuildDate>
     <generator>Jekyll v3.5.1</generator>
     
       <item>
-        <title>Golang学习笔记之4:链表实现</title>
+        <title>Golang学习笔记之4: 链表实现</title>
         <description>&lt;blockquote&gt;
   &lt;p&gt;整理：程序媛🐰&lt;/p&gt;
 
   &lt;p&gt;博客：http://cxytujie.github.io&lt;/p&gt;
 
   &lt;p&gt;备注：如有错误，请指正，不断更新迭代&lt;/p&gt;
+
 &lt;/blockquote&gt;
 
-&lt;h1 id=&quot;golang学习笔记之4链表实现&quot;&gt;Golang学习笔记之4:链表实现&lt;/h1&gt;
 &lt;p&gt;以前学数据结构的时候，总觉得很抽象，把他想象的很高端，以为是特定算法，需要去记忆！做过几年开发后，再学习golang语言，想去重温下链表二叉树这些数据结构，原来这么多年，都是被名次说法给困扰了。其实，算法，或者数据结构（链表，树，图）其实就是一种分析问题的思路，我们如果把分析的思路转化为自己理解的方式来结合写代码，就会觉得不是那么抽象了。&lt;/p&gt;
 
 &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;分析思路：&lt;/code&gt;&lt;/p&gt;
@@ -155,8 +155,8 @@ func (p Link) Traverse() {
 
 </description>
         <pubDate>Sat, 05 May 2018 00:00:00 +0800</pubDate>
-        <link>https://www.jianshu.com/u/e9eb7284f689/2018/05/05/golang-lianbiao/</link>
-        <guid isPermaLink="true">https://www.jianshu.com/u/e9eb7284f689/2018/05/05/golang-lianbiao/</guid>
+        <link>http://localhost:4000/2018/05/05/golang-lianbiao/</link>
+        <guid isPermaLink="true">http://localhost:4000/2018/05/05/golang-lianbiao/</guid>
         
         <category>golang</category>
         
@@ -334,8 +334,8 @@ func main() {
 
 </description>
         <pubDate>Thu, 03 May 2018 00:00:00 +0800</pubDate>
-        <link>https://www.jianshu.com/u/e9eb7284f689/2018/05/03/golang-struct/</link>
-        <guid isPermaLink="true">https://www.jianshu.com/u/e9eb7284f689/2018/05/03/golang-struct/</guid>
+        <link>http://localhost:4000/2018/05/03/golang-struct/</link>
+        <guid isPermaLink="true">http://localhost:4000/2018/05/03/golang-struct/</guid>
         
         <category>golang</category>
         
@@ -481,8 +481,8 @@ func quickSort(s []int64, low, high int64) { //start起始点，end终止点
 
 </description>
         <pubDate>Thu, 03 May 2018 00:00:00 +0800</pubDate>
-        <link>https://www.jianshu.com/u/e9eb7284f689/2018/05/03/golang-sort/</link>
-        <guid isPermaLink="true">https://www.jianshu.com/u/e9eb7284f689/2018/05/03/golang-sort/</guid>
+        <link>http://localhost:4000/2018/05/03/golang-sort/</link>
+        <guid isPermaLink="true">http://localhost:4000/2018/05/03/golang-sort/</guid>
         
         <category>golang</category>
         
@@ -671,8 +671,8 @@ fmt.Println(key, value) //1 你好
 
 </description>
         <pubDate>Thu, 03 May 2018 00:00:00 +0800</pubDate>
-        <link>https://www.jianshu.com/u/e9eb7284f689/2018/05/03/golang-slice-map/</link>
-        <guid isPermaLink="true">https://www.jianshu.com/u/e9eb7284f689/2018/05/03/golang-slice-map/</guid>
+        <link>http://localhost:4000/2018/05/03/golang-slice-map/</link>
+        <guid isPermaLink="true">http://localhost:4000/2018/05/03/golang-slice-map/</guid>
         
         <category>golang</category>
         
