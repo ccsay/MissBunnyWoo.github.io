@@ -3,10 +3,10 @@
   <channel>
     <title>程序媛博客</title>
     <description>兔姐🐰，一枚有信仰的程序媛，专注学习技术，热衷于知识分享，为开源贡献出一点点力量！</description>
-    <link>http://localhost:4000/</link>
-    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 04 May 2018 09:00:25 +0800</pubDate>
-    <lastBuildDate>Fri, 04 May 2018 09:00:25 +0800</lastBuildDate>
+    <link>https://www.jianshu.com/u/e9eb7284f689/</link>
+    <atom:link href="https://www.jianshu.com/u/e9eb7284f689/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Sat, 05 May 2018 11:43:34 +0800</pubDate>
+    <lastBuildDate>Sat, 05 May 2018 11:43:34 +0800</lastBuildDate>
     <generator>Jekyll v3.5.1</generator>
     
       <item>
@@ -180,8 +180,8 @@ func main() {
 
 </description>
         <pubDate>Thu, 03 May 2018 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2018/05/03/golang-struct/</link>
-        <guid isPermaLink="true">http://localhost:4000/2018/05/03/golang-struct/</guid>
+        <link>https://www.jianshu.com/u/e9eb7284f689/2018/05/03/golang-struct/</link>
+        <guid isPermaLink="true">https://www.jianshu.com/u/e9eb7284f689/2018/05/03/golang-struct/</guid>
         
         <category>golang</category>
         
@@ -327,8 +327,8 @@ func quickSort(s []int64, low, high int64) { //start起始点，end终止点
 
 </description>
         <pubDate>Thu, 03 May 2018 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2018/05/03/golang-sort/</link>
-        <guid isPermaLink="true">http://localhost:4000/2018/05/03/golang-sort/</guid>
+        <link>https://www.jianshu.com/u/e9eb7284f689/2018/05/03/golang-sort/</link>
+        <guid isPermaLink="true">https://www.jianshu.com/u/e9eb7284f689/2018/05/03/golang-sort/</guid>
         
         <category>golang</category>
         
@@ -517,10 +517,155 @@ fmt.Println(key, value) //1 你好
 
 </description>
         <pubDate>Thu, 03 May 2018 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2018/05/03/golang-slice-map/</link>
-        <guid isPermaLink="true">http://localhost:4000/2018/05/03/golang-slice-map/</guid>
+        <link>https://www.jianshu.com/u/e9eb7284f689/2018/05/03/golang-slice-map/</link>
+        <guid isPermaLink="true">https://www.jianshu.com/u/e9eb7284f689/2018/05/03/golang-slice-map/</guid>
         
         <category>golang</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>Glolang Lianbiao</title>
+        <description>
+&lt;h1 id=&quot;golang学习笔记之4链表实现&quot;&gt;Golang学习笔记之4:链表实现&lt;/h1&gt;
+&lt;p&gt;以前学数据结构的时候，总觉得很抽象，把他想象的很高端，以为是特定算法，需要去记忆！做过几年开发后，再学习golang语言，想去重温下链表二叉树这些数据结构，原来这么多年，都是被名次说法给困扰了。其实，算法，或者数据结构（链表，树，图）其实就是一种分析问题的思路，我们如果把分析的思路转化为自己理解的方式来结合写代码，就会觉得不是那么抽象了。&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;分析思路：&lt;/code&gt;&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;结构体，是一个对象的描述信息！结构体可以封装我们任何描述的字段！
+     2. 那么链表？肯定要存储数值，那么就要有data
+     3. 两个节点元素之间要建立关系，所以我们使用了指针来🔗连接一个个节点，组成一个链条🔗🔗🔗
+     4. 这样就把学术说法转化成自己代码实际的内容
+     5. 往链表中插入数据，就是给结构体中指针变量赋值&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;定义结构体&quot;&gt;定义结构体&lt;/h3&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+//单向链表节点的结构体类型
+type LinkNode struct {
+	data interface{}
+	next *LinkNode
+}
+
+//链表的结构体
+type Link struct {
+	head *LinkNode
+	tail *LinkNode
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;插入元素头插法&quot;&gt;插入元素（头插法）&lt;/h3&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;//头部插入，移动头部指针
+func (p *Link) InsertHead(data interface{}) {
+	//每次插入的数据封装为一个节点
+	node := &amp;amp;LinkNode{
+		data: data,
+		next: nil,
+	}
+	//空链表判断，头尾指针直接指向唯一的元素
+	if p.head == nil &amp;amp;&amp;amp; p.tail == nil {
+		p.head, p.tail = node, node
+		return
+	}
+	//不为空的链表，就移动头部指针
+	node.next = p.head
+	p.head = node
+
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;插入元素尾插法&quot;&gt;插入元素（尾插法）&lt;/h3&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+//尾部插入，移动尾部指针
+func (p *Link) InsertTail(data interface{}) {
+	//每次插入的数据封装为一个节点
+	node := &amp;amp;LinkNode{
+		data: data,
+		next: nil,
+	}
+	//空链表判断，头尾指针直接指向唯一的元素
+	if p.head == nil &amp;amp;&amp;amp; p.tail == nil {
+		p.head = node
+		p.tail = node
+		return
+	}
+
+	//不为空的链表，就移动尾部指针
+	p.tail.next = node
+	p.tail = node
+
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;遍历链表&quot;&gt;遍历链表&lt;/h3&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+//链表的遍历
+func (p Link) Traverse() {
+	for p.head != nil { //当节点不为nil时，就遍历输出
+		fmt.Println(p.head.data)
+		p.head = p.head.next //移动头部指针
+	}
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;删除&quot;&gt;删除&lt;/h3&gt;
+&lt;blockquote&gt;
+
+  &lt;p&gt;结构体默认传递是值传递(因为不想使遍历后，改变原链表，所以使用值传递)
+想删除，可以使用一个指针节点类型的，来变更指针next
+临时节点，因为是单向链表，用临时节点，存放要删除元素的前一个节点&lt;/p&gt;
+
+&lt;/blockquote&gt;
+
+&lt;p&gt;代码：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;func (p Link) Remove(e interface{}) {
+	temp := p.head //让临时节点指向，存放要删除元素的前一个节点
+
+	for p.head != nil { //从头开始循环遍历，直到节点为空，停止遍历
+		if p.head.data == e {
+			temp.next = temp.next.next //找到，则利用暂存的temp节点，使指针指向该元素节点的下一个节点
+		}
+
+		temp = p.head        //temp存放前一个节点
+		p.head = p.head.next //p用来做遍历使用
+
+	}
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h3 id=&quot;测试main函数&quot;&gt;测试main函数&lt;/h3&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;func main() {
+	linkData := new(Link)
+	for i := 0; i &amp;lt; 10; i++ {
+		linkData.InsertTail(i) //尾部插入是正序的
+
+	}
+	linkData.Traverse()
+	for i := 0; i &amp;lt; 10; i++ {
+		linkData.InsertHead(i) //头部插入是逆序的
+
+	}
+	linkData.Traverse()
+	//删除值为8的节点
+	linkData.Remove(8)
+	fmt.Println(&quot;删除后&quot;)
+	linkData.Traverse()
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+</description>
+        <pubDate>Thu, 03 May 2018 00:00:00 +0800</pubDate>
+        <link>https://www.jianshu.com/u/e9eb7284f689/2018/05/03/glolang-lianbiao/</link>
+        <guid isPermaLink="true">https://www.jianshu.com/u/e9eb7284f689/2018/05/03/glolang-lianbiao/</guid>
         
         
       </item>
